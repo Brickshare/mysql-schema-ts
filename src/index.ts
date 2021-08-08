@@ -14,7 +14,8 @@ const cli = meow(
     --tinyIntAsBoolean, -b    Treat TinyInt as Boolean
     --binaryAsBuffer, -B      Treat Binary as Buffer
     --nullAsUndefined, -u     Treat null as undefined   
-    --nullPlusUndefined, -p   Treat as null and undefined   
+    --nullPlusUndefined, -p   Treat as null and undefined
+    --outputAsTypes           Output types instead of interfaces
 
 	Examples
 	  $ mysql8-schema-ts --prefix SQL
@@ -51,24 +52,28 @@ const cli = meow(
         alias: 'p',
         default: false,
       },
+      outputAsTypes: {
+        type: 'boolean',
+        default: false,
+      },
     },
   }
 )
 
 const db = cli.input[0]
-const { table, prefix, tinyIntAsBoolean, binaryAsBuffer, nullAsUndefined, nullPlusUndefined } = cli.flags
+const { table, prefix, tinyIntAsBoolean, binaryAsBuffer, nullAsUndefined, nullPlusUndefined, outputAsTypes } = cli.flags
 
 async function main(): Promise<string> {
   if (!db) {
     cli.showHelp()
   }
-  console.error('bool', cli.flags)
 
   // Set the config from flags
   config.binaryAsBuffer = binaryAsBuffer
   config.tinyIntAsBoolean = tinyIntAsBoolean
   config.nullAsUndefined = nullAsUndefined
   config.nullPlusUndefined = nullPlusUndefined
+  config.outputAsTypes = outputAsTypes
 
   if (cli.flags.table) {
     return inferTable(db, table, prefix)
