@@ -3,4 +3,5 @@ export default {
   binaryAsBuffer: false,
   nullAsUndefined: false,
   nullPlusUndefined: false,
+  outputAsTypes: false,
 }
