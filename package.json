@@ -1,7 +1,7 @@
 {
-  "name": "mysql8-schema-ts",
+  "name": "mysql-schema-ts",
   "version": "2.2.1",
-  "description": "mysql8-schema-ts converts mysql schemas into typescript interfaces",
+  "description": "converts mysql schemas into typescript types",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "author": "Netto Farah <nettofarah@gmail.com>",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rasmussyberg/mysql8-schema-ts.git"
+    "url": "https://github.com/brickshare/mysql-schema-ts.git"
   },
   "np": {
     "yarn": false

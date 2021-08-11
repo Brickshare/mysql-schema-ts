@@ -1,7 +1,7 @@
 import camelcase from 'camelcase'
 import config from './config'
 
-export interface Column {
+export type Column = {
   udtName: string
   nullable: boolean
   hasDefault: boolean
@@ -10,11 +10,11 @@ export interface Column {
   tsType: string
 }
 
-export interface Table {
+export type Table = {
   [columnName: string]: Column
 }
 
-export interface TableNonTsType {
+export type TableNonTsType = {
   [columnName: string]: Omit<Column, 'tsType'>
 }
 
@@ -56,10 +56,10 @@ export function tableToTS(name: string, prefix: string, table: Table): string {
   return `
     /**
      * Exposes all fields present in ${name} as a typescript
-     * interface. 
+     * type. 
      * This is especially useful for SELECT * FROM
     */
-    export interface ${tableName} {
+    export ${config.outputAsTypes ? 'type' : 'interface'} ${tableName} ${config.outputAsTypes ? '=' : ''} {
     ${members(false)}
     }
 
@@ -70,7 +70,7 @@ export function tableToTS(name: string, prefix: string, table: Table): string {
      * This is especially useful when generating inserts, as you
      * should be able to ommit these fields if you'd like
     */
-    export interface ${tableName}WithDefaults {
+    export ${config.outputAsTypes ? 'type' : 'interface'} ${tableName}WithDefaults ${config.outputAsTypes ? '=' : ''} {
     ${members(true)}
     }
   `.trim()

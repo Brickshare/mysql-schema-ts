@@ -42,8 +42,8 @@ export async function inferTable(connectionString: string, table: string, prefix
 export async function inferSchema(connectionString: string, prefix: string = ''): Promise<string> {
   const db = new MySQL(connectionString)
   const tables = await db.allTables()
-  const interfaces = tables.map((table) => tableToTS(table.name, prefix, table.table))
-  const code = [await header(interfaces.some((i) => i.includes('JSON'))), ...interfaces].join('\n\n')
+  const types = tables.map((table) => tableToTS(table.name, prefix, table.table))
+  const code = [await header(types.some((i) => i.includes('JSON'))), ...types].join('\n\n')
   return pretty(code)
 }
 
